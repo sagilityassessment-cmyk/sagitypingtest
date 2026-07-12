@@ -26,7 +26,44 @@ const wordBounds = getWordBoundaries(displayText);
 function startTimer(){ startTime = Date.now(); timerInterval = setInterval(updateTimeAndStats, 1000); }
 function updateTimeAndStats(){ const elapsed = Math.floor((Date.now()-startTime)/1000); const m = Math.floor(elapsed/60); const s = elapsed%60; timeEl.textContent = m>0?`${m}m ${s}s`:`${s}s`; calculateStats(); }
 
-typingInput.addEventListener('input', ()=>{ if(testCompleted) return; if(!startTime) startTimer(); typedTextRaw = typingInput.value; renderOverlay(); renderDisplayFollowingCaret(); calculateStats(); if(typedTextRaw.length >= displayText.length) finishTest(); });
+typingInput.addEventListener('input', () => {
+    if (testCompleted) return;
+
+    if (!startTime) startTimer();
+
+    let value = typingInput.value;
+
+    let errorIndex = -1;
+
+    for (let i = 0; i < value.length; i++) {
+        if (i >= displayText.length || value[i] !== displayText[i]) {
+            errorIndex = i;
+            break;
+        }
+    }
+
+    // Stop user from typing past the first mistake
+    if (errorIndex !== -1 && value.length > errorIndex + 1) {
+        value = value.substring(0, errorIndex + 1);
+
+        typingInput.value = value;
+
+        typingInput.setSelectionRange(
+            value.length,
+            value.length
+        );
+    }
+
+    typedTextRaw = value;
+
+    renderOverlay();
+    renderDisplayFollowingCaret();
+    calculateStats();
+
+    if (typedTextRaw.length >= displayText.length) {
+        finishTest();
+    }
+});
 
 typingInput.addEventListener('scroll', ()=>{ typingOverlay.scrollTop = typingInput.scrollTop; typingOverlay.scrollLeft = typingInput.scrollLeft; });
 
