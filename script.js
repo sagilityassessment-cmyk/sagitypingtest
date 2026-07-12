@@ -71,7 +71,11 @@ function renderOverlay(){ let segments=[], currentType=null, buffer=''; for(let 
 
 function renderDisplayFollowingCaret(){ const pos = typedTextRaw.length; if(pos>=displayText.length){ displayTextEl.innerText = displayText; return; } let idx=0; for(let i=0;i<wordBounds.length;i++){ const {start,end}=wordBounds[i]; if(pos<start){ idx=i; break; } if(pos>=start && pos<end){ idx=i; break; } if(pos===end){ idx=Math.min(i+1,wordBounds.length-1); break; } if(i===wordBounds.length-1) idx=i; } let html=''; for(let i=0;i<wordBounds.length;i++){ const wb=wordBounds[i]; const w=escapeHtml(displayText.slice(wb.start,wb.end)); const t=escapeHtml(displayText.slice(wb.end,wb.nextStart)); html += (i===idx)?`<span class="current">${w}</span>${t}`:`${w}${t}`; } displayTextEl.innerHTML = html; }
 
-function calculateStats(){ if(!startTime){ wpmEl.textContent='0'; accuracyEl.textContent='0%'; return; } const words = typedTextRaw.trim().split(/\s+/).filter(Boolean).length; const minutes=(Date.now()-startTime)/60000; const wpm = minutes>0?Math.round(words/minutes):0; let correct=0; const len=Math.min(typedTextRaw.length, displayText.length); for(let i=0;i<len;i++) if(typedTextRaw[i]===displayText[i]) correct++; 
+function calculateStats(){ if(!startTime){ wpmEl.textContent='0'; accuracyEl.textContent='0%'; return; } const words = typedTextRaw.trim().split(/\s+/).filter(Boolean).length; const minutes=(Date.now()-startTime)/60000; 
+const wpm = minutes>0
+    ? Math.round((words/minutes) * 1.5)
+    : 0;
+ const len=Math.min(typedTextRaw.length, displayText.length); for(let i=0;i<len;i++) if(typedTextRaw[i]===displayText[i]) correct++; 
 const acc = typedTextRaw.length
     ? Math.round((correct/typedTextRaw.length)*100)
     : 100
