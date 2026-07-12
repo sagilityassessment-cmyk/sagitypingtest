@@ -35,7 +35,6 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
     word-wrap: break-word;
 }
 .typing-input { position: relative; color: transparent; caret-color: #111; background: transparent; border: 0; resize: none; outline: none; }
-.typing-input { font-size: 16px;}
 .typing-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; color: #000; }
 .correct { color: #000; }
 .incorrect { color: #d83b01; }
