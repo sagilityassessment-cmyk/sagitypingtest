@@ -25,7 +25,15 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
 
 /* Typing shell (overlay + textarea) */
 .typing-shell { position: relative; border: 1px solid #222; border-radius: 4px; background: #fff; max-height: 380px; overflow-y: auto; }
-.typing-input, .typing-overlay { font: 15px/1.7 Arial, sans-serif; padding: 12px; min-height: 380px; width: 100%; white-space: pre-wrap; word-wrap: break-word; }
+
+.typing-input, .typing-overlay {
+    font: 12px/1.7 Arial, sans-serif;
+    padding: 12px;
+    min-height: 380px;
+    width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
 .typing-input { position: relative; color: transparent; caret-color: #111; background: transparent; border: 0; resize: none; outline: none; }
 .typing-input { font-size: 16px;}
 .typing-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; color: #000; }
